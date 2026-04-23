@@ -9,21 +9,22 @@ FUSION ?= false
 LDFLAGS ?= "-X github.com/red-hat-storage/odf-multicluster-orchestrator/version.Version=${VERSION}"
 
 IMAGE_REGISTRY ?= quay.io
-REGISTRY_NAMESPACE ?= ocs-dev
-IMAGE_TAG ?= latest
+REGISTRY_NAMESPACE ?= nnevin
+IMAGE_TAG ?= idmap
 
 IMAGE_NAME ?= odf-multicluster-orchestrator
 BUNDLE_IMAGE_NAME ?= $(IMAGE_NAME)-bundle
 CATALOG_IMAGE_NAME ?= $(IMAGE_NAME)-catalog
 RAMEN_HUB_PACKAGE_NAME ?= ramen-hub-operator
 MULTICLUSTER_CONSOLE_IMG_NAME ?= odf-multicluster-console
-MULTICLUSTER_CONSOLE_IMG_TAG ?= latest
+MULTICLUSTER_CONSOLE_IMG_TAG ?= idmap
 
 # Image URL to use all building/pushing image targets
 IMG ?=  $(IMAGE_REGISTRY)/$(REGISTRY_NAMESPACE)/$(IMAGE_NAME):$(IMAGE_TAG)
-MULTICLUSTER_CONSOLE_IMG ?= ${IMAGE_REGISTRY}/$(REGISTRY_NAMESPACE)/$(MULTICLUSTER_CONSOLE_IMG_NAME):$(MULTICLUSTER_CONSOLE_IMG_TAG)
+#MULTICLUSTER_CONSOLE_IMG ?= ${IMAGE_REGISTRY}/$(REGISTRY_NAMESPACE)/$(MULTICLUSTER_CONSOLE_IMG_NAME):$(MULTICLUSTER_CONSOLE_IMG_TAG)
+MULTICLUSTER_CONSOLE_IMG ?= registry.redhat.io/odf4/odf-multicluster-console-rhel9@sha256:a40ecc3189f16b4cefe1f6b93163e3109c0efa03bb2a3ead275d706746ae46b2
 
-BUILD_TOOL ?= docker
+BUILD_TOOL ?= podman
 # CHANNELS define the bundle channels used in the bundle.
 # Add a new line here if you would like to change its default config. (E.g CHANNELS = "candidate,fast,stable")
 # To re-generate a bundle for other specific channels without changing the standard setup, you can:
@@ -46,12 +47,11 @@ BUNDLE_METADATA_OPTS ?= $(BUNDLE_CHANNELS) $(BUNDLE_DEFAULT_CHANNEL)
 # BUNDLE_IMG defines the image:tag used for the bundle.
 # You can use it as an arg. (E.g make bundle-build BUNDLE_IMG=<some-registry>/<project-name-bundle>:<tag>)
 BUNDLE_IMG ?= $(IMAGE_REGISTRY)/$(REGISTRY_NAMESPACE)/$(BUNDLE_IMAGE_NAME):$(IMAGE_TAG)
-RAMEN_BUNDLE_IMAGE ?= quay.io/ramendr/ramen-hub-operator-bundle:canary
-
+RAMEN_BUNDLE_IMAGE ?= quay.io/nnevin/ramen-hub-operator-bundle:idmap
 
 # A comma-separated list of bundle images (e.g. make catalog-build BUNDLE_IMGS=example.com/operator-bundle:v0.1.0,example.com/operator-bundle:v0.2.0).
 # These images MUST exist in a registry and be pull-able.
-BUNDLE_IMGS ?= $(BUNDLE_IMG),$(RAMEN_BUNDLE_IMAGE)
+BUNDLE_IMGS ?= $(BUNDLE_IMG),$(RAMEN_BUNDLE_IMAGE),quay.io/nnevin/ramen-dr-cluster-operator-bundle:idmap
 
 # The image tag given to the resulting catalog image (e.g. make catalog-build CATALOG_IMG=example.com/operator-catalog:v0.2.0).
 CATALOG_IMG ?= $(IMAGE_REGISTRY)/$(REGISTRY_NAMESPACE)/$(CATALOG_IMAGE_NAME):$(IMAGE_TAG)

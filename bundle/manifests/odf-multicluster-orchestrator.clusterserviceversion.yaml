@@ -36,7 +36,7 @@ metadata:
       ]
     capabilities: Seamless Upgrades
     console.openshift.io/plugins: '["odf-multicluster-console"]'
-    createdAt: "2026-02-25T14:31:00Z"
+    createdAt: "2026-04-12T01:05:21Z"
     olm.skipRange: ""
     operators.openshift.io/infrastructure-features: '["disconnected"]'
     operators.operatorframework.io/builder: operator-sdk-unknown
@@ -385,7 +385,7 @@ spec:
                 - /odf-multicluster-orchestrator
                 env:
                 - name: TOKEN_EXCHANGE_IMAGE
-                  value: quay.io/ocs-dev/odf-multicluster-orchestrator:latest
+                  value: quay.io/nnevin/odf-multicluster-orchestrator:idmap
                 - name: POD_NAME
                   valueFrom:
                     fieldRef:
@@ -394,7 +394,7 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.namespace
-                image: quay.io/ocs-dev/odf-multicluster-orchestrator:latest
+                image: quay.io/nnevin/odf-multicluster-orchestrator:idmap
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -439,7 +439,7 @@ spec:
             spec:
               automountServiceAccountToken: false
               containers:
-              - image: quay.io/ocs-dev/odf-multicluster-console:latest
+              - image: registry.redhat.io/odf4/odf-multicluster-console-rhel9@sha256:a40ecc3189f16b4cefe1f6b93163e3109c0efa03bb2a3ead275d706746ae46b2
                 name: odf-multicluster-console
                 ports:
                 - containerPort: 9001

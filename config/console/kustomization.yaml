@@ -10,6 +10,6 @@ resources:
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 images:
-- name: odf-multicluster-console
-  newName: quay.io/ocs-dev/odf-multicluster-console
-  newTag: latest
+- digest: sha256:a40ecc3189f16b4cefe1f6b93163e3109c0efa03bb2a3ead275d706746ae46b2
+  name: odf-multicluster-console
+  newName: registry.redhat.io/odf4/odf-multicluster-console-rhel9
